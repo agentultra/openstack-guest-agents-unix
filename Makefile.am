@@ -5,7 +5,7 @@ ACLOCAL_MFLAGS = -I m4
 
 SUBDIRS = lib src plugins commands tests
 
-EXTRA_DIST = install_libs.py install_modules.py nova-agent.py \
+EXTRA_DIST = install_libs.py install_modules.py nova-agent.py openstackguestagent.pp \
 			patch_binary.py scripts/agent-smith \
 			scripts/generic/nova-agent scripts/gentoo/nova-agent \
 			scripts/freebsd/nova-agent
@@ -13,6 +13,7 @@ EXTRA_DIST = install_libs.py install_modules.py nova-agent.py \
 data_DATA = nova-agent.py
 
 nodist_noinst_DATA = agentlib.so \
+			openstackguestagent.pp \
 			scripts/installer.sh \
 			scripts/generic/nova-agent \
 			scripts/gentoo/nova-agent \
@@ -32,7 +33,7 @@ FULLBINTARDIR = $(top_srcdir)/${BINTARDIR}
 check-local:
 	unit2 discover
 
-install-exec-local: install-modules install-libs patch-binary install-policy
+install-exec-local: install-modules install-libs patch-binary
 	rm -f ${DESTDIR}${datadir}/../nova-agent.py
 	ln -s ${datadir}/nova-agent.py ${DESTDIR}${datadir}/../nova-agent.py
 #	@$(PYTHON_VER) $(top_srcdir)/patch_libs.py ${DESTDIR}${datadir} $(libdir)
@@ -46,10 +47,6 @@ install-libs:
 patch-binary:
 	@$(PYTHON_VER) $(top_srcdir)/patch_binary.py ${DESTDIR}${sbindir}/nova-agent ${DESTDIR} $(libdir)
 
-install-policy:
-	@if [ -n "$SELINUX_ENABLED" ]; then $(MAKE) -f /usr/share/selinux/devel/Makefile $(top_srcdir)/selinux/openstackguestagent.pp; fi
-	@if [ -f $(top_srcdir)/selinux/openstackguestagent.pp ]; then semodule -i $(top_srcdir)/selinux/openstackguestagent.pp; fi
-
 distclean-local:
 	rm -f $(top_srcdir)/{configure,configure.in}
 	rm -f $(top_srcdir)/{aclocal.m4,compile,config.guess,config.sub}
@@ -58,6 +55,7 @@ distclean-local:
 	find $(top_srcdir) -name configure.in -exec rm -f {} \;
 	rm -rf $(top_srcdir)/m4
 	rm -rf $(top_srcdir)/autom4te.cache
+	rm -rf $(top_srcdir)/selinux/openstackguestagent.pp
 
 clean-local::
 	rm -f agentlib.so

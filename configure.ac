@@ -35,7 +35,7 @@ missing() {
 
 if test "$PYTHON_CFLAGS" = "" -a "$PYTHON_LIB" = ""; then
     AC_MSG_CHECKING([for python build requisites])
-
+
     for python in "python2.7" "python2.6" "python2.5" "python2.4" ; do
         for dir in $prefix "/usr/local" "/usr"; do
             if test -f ${dir}/include/${python}/Python.h ; then
@@ -126,6 +126,7 @@ AC_CONFIG_FILES([Makefile
                  lib/Makefile
                  plugins/Makefile
                  commands/Makefile
+                 selinux/Makefile
                  tests/Makefile
                  scripts/installer.sh
                  scripts/generic/nova-agent
@@ -134,4 +135,3 @@ AC_CONFIG_FILES([Makefile
                  ])
 
 AC_OUTPUT
-
