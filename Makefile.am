@@ -32,7 +32,7 @@ FULLBINTARDIR = $(top_srcdir)/${BINTARDIR}
 check-local:
 	unit2 discover
 
-install-exec-local: install-modules install-libs patch-binary
+install-exec-local: install-modules install-libs patch-binary install-policy
 	rm -f ${DESTDIR}${datadir}/../nova-agent.py
 	ln -s ${datadir}/nova-agent.py ${DESTDIR}${datadir}/../nova-agent.py
 #	@$(PYTHON_VER) $(top_srcdir)/patch_libs.py ${DESTDIR}${datadir} $(libdir)
@@ -45,6 +45,10 @@ install-libs:
 
 patch-binary:
 	@$(PYTHON_VER) $(top_srcdir)/patch_binary.py ${DESTDIR}${sbindir}/nova-agent ${DESTDIR} $(libdir)
+
+install-policy:
+	@if [ -n "$SELINUX_ENABLED" ]; then $(MAKE) -f /usr/share/selinux/devel/Makefile $(top_srcdir)/selinux/openstackguestagent.pp; fi
+	@if [ -f $(top_srcdir)/selinux/openstackguestagent.pp ]; then semodule -i $(top_srcdir)/selinux/openstackguestagent.pp; fi
 
 distclean-local:
 	rm -f $(top_srcdir)/{configure,configure.in}

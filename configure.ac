@@ -105,6 +105,13 @@ AC_CHECK_LIB([pthread], [pthread_create], [], [
     exit 1
 ])
 
+# Check for selinux
+SELINUX_ENABLED=''
+AC_PATH_PROG([SESTATUS], [sestatus], [notfound])
+if test "$SESTATUS" != "notfound"; then
+    SELINUX_ENABLED=`sestatus | grep "enabled"`
+fi
+
 DESTDIR="/"
 
 AC_SUBST([GCOV_CFLAGS])
@@ -112,6 +119,7 @@ AC_SUBST([PYTHON_VER])
 AC_SUBST([PYTHON_CFLAGS])
 AC_SUBST([PYTHON_LIB])
 AC_SUBST([DESTDIR])
+AC_SUBST([SELINUX_ENABLED])
 
 AC_CONFIG_FILES([Makefile
                  src/Makefile
