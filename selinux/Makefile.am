@@ -8,12 +8,12 @@ dist_noinst_SCRIPTS = ${my_files}
 
 if USE_SELINUX
 all:
-	$(MAKE) -f /usr/share/selinux/devel/Makefile $(top_srcdir)/selinux/openstackguestagent.pp
+	$(MAKE) -f /usr/share/selinux/devel/Makefile $(abs_builddir)/selinux/openstackguestagent.pp
 endif
 
 
 if USE_SELINUX
 install-exec-local:
-	semodule -i $(top_srcdir)/selinux/openstackguestagent.pp
+	semodule -i $(abs_builddir)/selinux/openstackguestagent.pp
 endif
 

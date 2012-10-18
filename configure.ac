@@ -108,7 +108,7 @@ AC_CHECK_LIB([pthread], [pthread_create], [], [
 # Check for selinux
 AC_PATH_PROG([SESTATUS], [sestatus], [notfound])
 if test "$SESTATUS" != "notfound"; then
-    SELINUX_ENABLED=`sestatus | grep "enabled" | awk '{ print $3 }'`
+    SELINUX_ENABLED=`sestatus | grep "status" | awk '{ print $3 }'`
 fi
 
 AM_CONDITIONAL(USE_SELINUX, test "$SELINUX_ENABLED" = "enabled")
