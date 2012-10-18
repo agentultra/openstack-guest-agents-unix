@@ -35,7 +35,7 @@ missing() {
 
 if test "$PYTHON_CFLAGS" = "" -a "$PYTHON_LIB" = ""; then
     AC_MSG_CHECKING([for python build requisites])
-
+
     for python in "python2.7" "python2.6" "python2.5" "python2.4" ; do
         for dir in $prefix "/usr/local" "/usr"; do
             if test -f ${dir}/include/${python}/Python.h ; then
@@ -106,11 +106,12 @@ AC_CHECK_LIB([pthread], [pthread_create], [], [
 ])
 
 # Check for selinux
-SELINUX_ENABLED=''
 AC_PATH_PROG([SESTATUS], [sestatus], [notfound])
 if test "$SESTATUS" != "notfound"; then
-    SELINUX_ENABLED=`sestatus | grep "enabled"`
+    SELINUX_ENABLED=`sestatus | grep "enabled" | awk '{ print $3 }'`
 fi
+
+AM_CONDITIONAL(USE_SELINUX, test "$SELINUX_ENABLED" = "enabled")
 
 DESTDIR="/"
 

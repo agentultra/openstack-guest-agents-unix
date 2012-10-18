@@ -3,9 +3,9 @@ include $(top_srcdir)/Common.am
 
 ACLOCAL_MFLAGS = -I m4
 
-SUBDIRS = lib src plugins commands tests
+SUBDIRS = lib src plugins commands tests selinux
 
-EXTRA_DIST = install_libs.py install_modules.py nova-agent.py openstackguestagent.pp \
+EXTRA_DIST = install_libs.py install_modules.py nova-agent.py \
 			patch_binary.py scripts/agent-smith \
 			scripts/generic/nova-agent scripts/gentoo/nova-agent \
 			scripts/freebsd/nova-agent
@@ -13,7 +13,6 @@ EXTRA_DIST = install_libs.py install_modules.py nova-agent.py openstackguestagen
 data_DATA = nova-agent.py
 
 nodist_noinst_DATA = agentlib.so \
-			openstackguestagent.pp \
 			scripts/installer.sh \
 			scripts/generic/nova-agent \
 			scripts/gentoo/nova-agent \
