@@ -7,8 +7,10 @@ my_files = openstackguestagent.te openstackguestagent.fc
 dist_noinst_SCRIPTS = ${my_files}
 
 if USE_SELINUX
-all:
-	$(MAKE) -f /usr/share/selinux/devel/Makefile $(abs_builddir)/selinux/openstackguestagent.pp
+all: openstackguestagent.pp
+
+openstackguestagent.pp:
+	$(MAKE) -f /usr/share/selinux/devel/Makefile openstackguestagent.pp
 endif
 
 
