@@ -16,6 +16,6 @@ endif
 
 if USE_SELINUX
 install-exec-local:
-	semodule -i $(abs_builddir)/selinux/openstackguestagent.pp
+	echo `semodule -i openstackguestagent.pp`
 endif
 
