@@ -55,6 +55,7 @@ files_read_etc_runtime_files(openstack_guest_agent_t)
 files_read_usr_files(openstack_guest_agent_t)
 
 files_manage_generic_tmp_files(openstack_guest_agent_t)
+fs_search_tmpfs(openstack_guest_agent_t)
 
 usermanage_read_crack_db(openstack_guest_agent_t)
 auth_manage_shadow(openstack_guest_agent_t)
